@@ -5,20 +5,19 @@
 #include <sys/poll.h>
 
 
-#define DELAY 50000
+#define DELAY 60000
 
 int main(int argc, char *argv[]){
-    int    px,    py,
-            i,     j,
-        max_y, max_x;
+    int px, py;
+    int i, j;
+    int max_y, max_x;
 
-    int    bx = 1,    by = 1,
-        dir_y = -1, dir_x = -1;
+    int bx = 1, by = 1;
+    int dir_y = -1, dir_x = -1;
     int speed;
 
     int score = 0;
-    char sc[3];
-    char *s = sc;
+    char *sc = malloc(1);
 
     char c;
     char paddle = '_';
@@ -39,18 +38,18 @@ int main(int argc, char *argv[]){
     py = max_y - 2;
     px = max_x/2;
     speed = max_x / 15;
-    for( j = 0; j < 1000; j++){
+    for(;;){
         clear();
         for( i = 0; i < max_x/5; i++){
             mvaddch(py, px+i, paddle);
         }
 
-        //init_pair(1, COLOR_RED, COLOR_BLACK);
-        //attron(COLOR_PAIR(1));   
+        // init_pair(1, COLOR_RED, COLOR_WHITE);
+        //  attron(COLOR_PAIR(1));   
         mvaddch(by,bx, ball);
 
         sprintf(sc, "%d", score);
-        mvaddstr(0,0, s);
+        mvaddstr(0,0, sc);
 
         refresh();
         
@@ -59,7 +58,7 @@ int main(int argc, char *argv[]){
         if (by == 0) dir_y = -dir_y;
         if (bx == max_x || bx == 0) dir_x = -dir_x;
         if (by == max_y) break;
-        if ( px < bx && bx < (px + max_x/5) && by == py) {dir_y = -dir_y; score++;}
+        if ( px < bx && bx < (px + max_x/5) && by == py) {dir_y = -dir_y; score+=100000;}
 
         switch(dir_x){
             case -1: bx += 1; break;
